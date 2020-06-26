@@ -1,19 +1,33 @@
 import { REMOVE_JOB, UNREMOVE_JOB } from "../actionTypes";
-import { RECEIVE_JOBS } from "../serviceTypes";
+import { REQUEST_JOBS, RECEIVE_JOBS } from "../serviceTypes";
 
 const initialState = {
   jobIds: [],
   jobsById: {},
+  jobsLoading: false,
+  query: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case RECEIVE_JOBS: {
-      const { jobIds, jobsById } = action.payload;
+    case REQUEST_JOBS: {
+      const { jobIds, jobsById, jobsLoading, query } = action.payload;
       return {
         ...state,
         jobIds,
         jobsById,
+        jobsLoading,
+        query,
+      };
+    }
+    case RECEIVE_JOBS: {
+      const { jobIds, jobsById, jobsLoading, query } = action.payload;
+      return {
+        ...state,
+        jobIds,
+        jobsById,
+        jobsLoading,
+        query,
       };
     }
     case REMOVE_JOB: {

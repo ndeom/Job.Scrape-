@@ -5,49 +5,92 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Chip from "@material-ui/core/Chip";
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import "../styles/Card.css";
 
-function Card({ job, removeJob, unremoveJob }) {
-  console.table({ job, removeJob, unremoveJob });
+function Card({ currentTab, job, removeJob, unremoveJob }) {
   return (
     <div className="card grid-container">
-      {job.displayed ? (
+      <div className="card-accent"></div>
+      <img
+        className="logo"
+        src={
+          job.logo
+            ? job.logo
+            : "http://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d"
+        }
+        alt="logo"
+      />
+      <div className="job-title">
+        {job.title.length <= 50
+          ? job.title
+          : job.title.slice(0, 49).concat("...")}
+      </div>
+      <div className="company-and-location">
+        <div className="cl-inner">
+          <div className="company">{job.company ? job.company : ""}</div>
+          <div className="location-div">
+            <LocationOnOutlinedIcon classes={{ root: "location-svg" }} />
+            {job.location ? job.location : "Unavailable"}
+          </div>
+        </div>
+
+        <div className="time-div">
+          <ScheduleOutlinedIcon classes={{ root: "clock-svg" }} />
+          {`${Math.round(
+            (Date.now() - new Date(job.pub_date)) / 1000 / 60 / 60 / 24
+          )} days ago`}
+        </div>
+      </div>
+      <div className="vertical-rule"></div>
+      <div className="technologies">
+        {job.technologies !== "null" && job.technologies !== "undefined"
+          ? job.technologies.split(",").map(
+              (tech, i) => <Chip className="chip" label={tech} />
+
+              //i < 7 ? <Chip className="chip" label={tech} /> : null
+            )
+          : null}
+      </div>
+      <a
+        className="view-job-button"
+        href={job.link}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View Job
+      </a>
+      {currentTab === "displayed" ? (
         <React.Fragment>
-          <IconButton
-            id="remove-icon"
-            aria-label="remove"
+          <div
+            className={`favorite-button ${job.displayed ? "" : "active"}`}
             onClick={() => removeJob(job.id)}
           >
-            <DeleteIcon />
-          </IconButton>
+            <FavoriteIcon classes={{ root: "favorite-icon" }} />
+            Favorite
+          </div>
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <IconButton
-            id="remove-icon"
-            aria-label="remove"
+          <div
+            className="unfavorite-button"
             onClick={() => unremoveJob(job.id)}
           >
-            <AddCircleIcon />
-          </IconButton>
+            <FavoriteIcon classes={{ root: "favorite-icon" }} />
+            Unfavorite
+          </div>
         </React.Fragment>
       )}
-
-      <div className="job-title">{job.title ? job.title : ""}</div>
-      <div className="company-and-location">{`${
-        job.company ? job.company : ""
-      }, ${job.location ? job.location : ""}`}</div>
-      <div className="job-description">
-        {job.description ? job.description : ""}
-      </div>
-      <div className="technologies">
-        {job.technologies
-          ? job.technologies.map((tech) => <Chip label={tech} />)
-          : null}
-      </div>
-      <div className="post-date">{job.time ? job.time : ""}</div>
     </div>
   );
 }
 
-export default connect(null, { removeJob, unremoveJob })(Card);
+const mapStateToProps = (state) => {
+  return {
+    currentTab: state.tabFilter,
+  };
+};
+
+export default connect(mapStateToProps, { removeJob, unremoveJob })(Card);

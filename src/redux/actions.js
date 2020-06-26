@@ -14,3 +14,8 @@ export const setFilter = (tab) => ({
   type: actions.CHANGE_TAB,
   payload: { tab },
 });
+
+export const setPage = (page) => ({
+  type: actions.CHANGE_PAGE,
+  payload: { page },
+});

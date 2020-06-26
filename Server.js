@@ -10,7 +10,7 @@ app.use(cors());
 
 (async () => {
   const response = await fetch(
-    "https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty"
+    "https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty"
   );
 
   const json = await response.json();
