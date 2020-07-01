@@ -12,8 +12,8 @@ import Pagination from "@material-ui/lab/Pagination";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 
 class App extends React.Component {
-  constructor({ showTabs, pageCount, setFilter, setPage }) {
-    super({ showTabs, pageCount, setFilter, setPage });
+  constructor({ showTabs, activeTab, pageCount, setFilter, setPage }) {
+    super({ showTabs, activeTab, pageCount, setFilter, setPage });
     this.state = {
       prevPageYOffset: 0,
       scrollUpVisible: false,
@@ -42,31 +42,37 @@ class App extends React.Component {
         <div id="headerContainer">
           <header id="appHeader">
             <div id="logo">
-              <span id="abbrev">JS</span>
-              <span id="title">Job.Scrape( )</span>
+              <span id="logo-inner">
+                <span id="abbrev">JS</span>
+                <span id="title">Job.Scrape( )</span>
+              </span>
             </div>
             <nav>
               <ul className="nav-list">
                 <li
-                  className="nav-item"
+                  className={`nav-item ${
+                    this.props.activeTab === "displayed" ? "active" : ""
+                  }`}
                   onClick={() => this.props.setFilter("displayed")}
                 >
                   Results
                 </li>
                 <li
-                  className="nav-item"
+                  className={`nav-item ${
+                    this.props.activeTab === "removed" ? "active" : ""
+                  }`}
                   onClick={() => this.props.setFilter("removed")}
                 >
                   Favorited
                 </li>
-                <li
+                {/*<li
                   className="nav-item"
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
                 >
                   Search
-                </li>
+                </li>*/}
               </ul>
             </nav>
           </header>
@@ -76,7 +82,7 @@ class App extends React.Component {
           <Form />
           <Results />
         </div>
-        <div
+        {/*<div
           className={`scroll-to-top ${
             this.state.scrollUpVisible ? "scroll-into-view" : ""
           }`}
@@ -85,7 +91,7 @@ class App extends React.Component {
             classes={{ root: "scroll-arrow" }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           />
-        </div>
+        </div>*/}
       </div>
     );
   }

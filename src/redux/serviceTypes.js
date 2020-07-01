@@ -11,7 +11,7 @@ import fetch from "cross-fetch";
 const arrToObj = (arr) => {
   let page = 1;
   return arr.reduce((accum, value, index) => {
-    if (index !== 0 && index % 10 === 0) {
+    if (index !== 0 && index % 20 === 0) {
       page += 1;
     }
     accum[index] = { ...value, displayed: true, page: page };
@@ -83,11 +83,11 @@ export function fetchJobs(params) {
         url = url.slice(0, url.length - 1);
       }
 
-      return fetch(`http://localhost:8000/api?${url}`)
+      return fetch(`https://job-scrape-api.herokuapp.com/api?${url}`)
         .then((res) => res.json())
         .then((json) => dispatch(receiveJobs(json)));
     } else {
-      return fetch("http://localhost:8000/api")
+      return fetch("https://job-scrape-api.herokuapp.com/api")
         .then((res) => res.json())
         .then((json) => dispatch(receiveJobs(json)));
     }

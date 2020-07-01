@@ -46,7 +46,6 @@ function Results({
           <b>{numberJobs}</b> jobs found
         </span>
       </div>
-      <hr></hr>
       <div id="results-container">
         {jobs && jobs.length ? (
           jobs.map((job, i) => {

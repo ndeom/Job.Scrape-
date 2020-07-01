@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { removeJob, unremoveJob } from "../redux/actions";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Chip from "@material-ui/core/Chip";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
@@ -13,7 +10,6 @@ import "../styles/Card.css";
 function Card({ currentTab, job, removeJob, unremoveJob }) {
   return (
     <div className="card grid-container">
-      <div className="card-accent"></div>
       <img
         className="logo"
         src={
@@ -47,42 +43,44 @@ function Card({ currentTab, job, removeJob, unremoveJob }) {
       <div className="vertical-rule"></div>
       <div className="technologies">
         {job.technologies !== "null" && job.technologies !== "undefined"
-          ? job.technologies.split(",").map(
-              (tech, i) => <Chip className="chip" label={tech} />
-
-              //i < 7 ? <Chip className="chip" label={tech} /> : null
-            )
+          ? job.technologies
+              .split(",")
+              .map((tech, i) =>
+                tech !== "" ? <Chip className="chip" label={tech} /> : null
+              )
           : null}
       </div>
-      <a
-        className="view-job-button"
-        href={job.link}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View Job
-      </a>
-      {currentTab === "displayed" ? (
-        <React.Fragment>
-          <div
-            className={`favorite-button ${job.displayed ? "" : "active"}`}
-            onClick={() => removeJob(job.id)}
-          >
-            <FavoriteIcon classes={{ root: "favorite-icon" }} />
-            Favorite
-          </div>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <div
-            className="unfavorite-button"
-            onClick={() => unremoveJob(job.id)}
-          >
-            <FavoriteIcon classes={{ root: "favorite-icon" }} />
-            Unfavorite
-          </div>
-        </React.Fragment>
-      )}
+      <div id="button-container">
+        <a
+          className="view-job-button"
+          href={job.link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Job
+        </a>
+        {currentTab === "displayed" ? (
+          <React.Fragment>
+            <div
+              className={`favorite-button ${job.displayed ? "" : "active"}`}
+              onClick={() =>
+                job.displayed ? removeJob(job.id) : unremoveJob(job.id)
+              }
+            >
+              <FavoriteIcon classes={{ root: "favorite-icon" }} />
+            </div>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <div
+              className="unfavorite-button"
+              onClick={() => unremoveJob(job.id)}
+            >
+              <FavoriteIcon classes={{ root: "favorite-icon" }} />
+            </div>
+          </React.Fragment>
+        )}
+      </div>
     </div>
   );
 }
