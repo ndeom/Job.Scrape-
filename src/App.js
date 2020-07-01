@@ -2,14 +2,10 @@ import React from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Results from "./components/Results";
-import Tabs from "./components/Tabs";
 import { setFilter } from "./redux/actions";
 import { setPage } from "./redux/actions";
 import { connect } from "react-redux";
 import { getJobsIdList } from "./redux/selectors";
-import { withStyles } from "@material-ui/core/styles";
-import Pagination from "@material-ui/lab/Pagination";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 
 class App extends React.Component {
   constructor({ showTabs, activeTab, pageCount, setFilter, setPage }) {
@@ -65,14 +61,6 @@ class App extends React.Component {
                 >
                   Favorited
                 </li>
-                {/*<li
-                  className="nav-item"
-                  onClick={() =>
-                    window.scrollTo({ top: 0, behavior: "smooth" })
-                  }
-                >
-                  Search
-                </li>*/}
               </ul>
             </nav>
           </header>
@@ -82,16 +70,6 @@ class App extends React.Component {
           <Form />
           <Results />
         </div>
-        {/*<div
-          className={`scroll-to-top ${
-            this.state.scrollUpVisible ? "scroll-into-view" : ""
-          }`}
-        >
-          <ArrowUpwardIcon
-            classes={{ root: "scroll-arrow" }}
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          />
-        </div>*/}
       </div>
     );
   }
