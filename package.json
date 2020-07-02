@@ -1,6 +1,6 @@
 {
-  "name": "job-hunt",
-  "version": "0.1.0",
+  "name": "job.scrape",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.10.1",
